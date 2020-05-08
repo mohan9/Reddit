@@ -11,6 +11,12 @@ data class PostData(
     val permalink: String = "",
     @SerializedName("url")
     val url: String = "",
+    @SerializedName("thumbnail")
+    val thumbnail: String = "",
+    @SerializedName("preview")
+    val preview: RedditObjectPreview?,
+    @SerializedName("over_18")
+    val over_18: Boolean,
     @SerializedName("created_utc")
     val created_utc: Double = 0.0
 )

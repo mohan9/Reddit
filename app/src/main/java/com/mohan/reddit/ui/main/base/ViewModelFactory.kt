@@ -1,8 +1,8 @@
 package com.mohan.reddit.ui.main.base
 
-import ApiHelper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.mohan.reddit.data.api.ApiHelper
 import com.mohan.reddit.data.repo.MainRepository
 import com.mohan.reddit.ui.main.MainViewModel
 
