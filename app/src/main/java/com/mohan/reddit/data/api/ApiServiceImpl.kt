@@ -4,7 +4,7 @@ import io.reactivex.Single
 
 class ApiServiceImpl : ApiService {
 
-    override fun getUsers(): Single<List<DataMain>> {
+    override fun getPosts(): Single<List<DataMain>> {
         return Rx2AndroidNetworking.get("https://www.reddit.com/r/subreddit/random.json")
             .build()
             .getObjectListSingle(DataMain::class.java)
