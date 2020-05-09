@@ -11,4 +11,10 @@ class ApiServiceImpl : ApiService {
             .getObjectListSingle(DataMain::class.java)
     }
 
+    override fun getComments(string: String): Single<List<DataMain>> {
+        return Rx2AndroidNetworking.get("https://www.reddit.com$string.json")
+            .build()
+            .getObjectListSingle(DataMain::class.java)
+    }
+
 }

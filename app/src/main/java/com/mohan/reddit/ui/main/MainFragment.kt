@@ -29,6 +29,7 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var commentsViewModel: CommentsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,6 +81,40 @@ class MainFragment : Fragment() {
                     .into(img_url)
             }
         }
+
+        setupObserverComments(users[0].data.children[0].data.permalink);
+    }
+
+    private fun setupObserverComments(permalink: String) {
+        commentsViewModel.init(permalink)
+        commentsViewModel.getComments().observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressBar.visibility = View.GONE
+                    it.data?.let { comments ->
+                        renderUiComments(comments)
+                    }
+                    tv_title.visibility = View.VISIBLE
+                }
+                Status.LOADING -> {
+                    progressBar.visibility = View.VISIBLE
+                    tv_title.visibility = View.GONE
+                }
+                Status.ERROR -> {
+                    //Handle Error
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+    }
+
+    private fun renderUiComments(comments: List<DataMain>) {
+        try {
+            tv_comment.setText(comments[1].data.children[1].data.body)
+        } catch (e: IndexOutOfBoundsException) {
+            tv_comment.setText("No Comments available");
+        }
     }
 
     private fun setupViewModel() {
@@ -87,6 +122,11 @@ class MainFragment : Fragment() {
             this,
             ViewModelFactory(ApiHelper(ApiServiceImpl()))
         ).get(MainViewModel::class.java)
+
+        commentsViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(ApiHelper(ApiServiceImpl()))
+        ).get(CommentsViewModel::class.java)
     }
 
     private fun createPlaceholder(srcWidth: Int, srcHeight: Int): BitmapDrawable {

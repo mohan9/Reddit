@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mohan.reddit.data.api.ApiHelper
 import com.mohan.reddit.data.repo.MainRepository
+import com.mohan.reddit.ui.main.CommentsViewModel
 import com.mohan.reddit.ui.main.MainViewModel
 
 class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {
@@ -12,6 +13,11 @@ class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Fac
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             return MainViewModel(MainRepository(apiHelper)) as T
         }
+
+        if (modelClass.isAssignableFrom(CommentsViewModel::class.java)) {
+            return CommentsViewModel(MainRepository(apiHelper)) as T
+        }
+
         throw IllegalArgumentException("Unknown class name")
     }
 

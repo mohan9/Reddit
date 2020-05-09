@@ -10,4 +10,7 @@ class MainRepository(private val apiHelper: ApiHelper) {
         return apiHelper.getPosts()
     }
 
+    fun getComments(string: String): Single<List<DataMain>> {
+        return apiHelper.getComments(string)
+    }
 }

@@ -7,5 +7,5 @@ interface ApiService {
 
         fun getPosts(): Single<List<DataMain>>
 
-
+        fun getComments(string: String): Single<List<DataMain>>
 }

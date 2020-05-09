@@ -18,5 +18,7 @@ data class PostData(
     @SerializedName("over_18")
     val over_18: Boolean,
     @SerializedName("created_utc")
-    val created_utc: Double = 0.0
+    val created_utc: Double = 0.0,
+    @SerializedName("body")
+    val body: String = ""
 )
